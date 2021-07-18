@@ -23,7 +23,7 @@ typedef struct _dlinfo {
 
 dlinfo  *dlinfo_new();
 
-dlinfo *dlinfo_free(dlinfo *dli);
+dlinfo  *dlinfo_free(dlinfo *dli);
 
 int     dlinfo_set_url(dlinfo *dli, const char *url);
 
