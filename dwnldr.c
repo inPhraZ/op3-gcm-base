@@ -22,6 +22,8 @@ dlinfo *dlinfo_new()
     if (!dli)
         return NULL;
 
+    memset(dli, 0, sizeof(dlinfo));
+
     return dli;
 }
 
