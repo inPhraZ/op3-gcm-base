@@ -19,7 +19,7 @@ dlinfo *dlinfo_new()
     dlinfo *dli;
 
     dli = (dlinfo *)malloc(sizeof(dlinfo));
-    if (!dl)
+    if (!dli)
         return NULL;
 
     return dli;
@@ -47,7 +47,7 @@ int dlinfo_set_url(dlinfo *dli, const char *url)
     return 0;
 }
 
-int dlinfo_set_kiwit(dlinfo *dli, const KIWIT *kiwit)
+int dlinfo_set_kiwit(dlinfo *dli, KIWIT *kiwit)
 {
     if (!dli || !kiwit)
         return 1;
@@ -61,7 +61,7 @@ int dlinfo_set_kiwit(dlinfo *dli, const KIWIT *kiwit)
     return 0;
 }
 
-int dlinfo_set_region(dlinfo *dli, const Region *reg)
+int dlinfo_set_region(dlinfo *dli, Region *reg)
 {
     if (!dli || !reg)
         return 1;

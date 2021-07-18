@@ -23,12 +23,13 @@ typedef struct _dlinfo {
 
 dlinfo  *dlinfo_new();
 
+dlinfo *dlinfo_free(dlinfo *dli);
+
 int     dlinfo_set_url(dlinfo *dli, const char *url);
 
-int     dlinfo_set_kiwit(dlinfo *dli, const KIWIT *kiwit);
+int     dlinfo_set_kiwit(dlinfo *dli, KIWIT *kiwit);
 
-int     dlinfo_set_region(dlinfo *dli, const Region *reg);
+int     dlinfo_set_region(dlinfo *dli, Region *reg);
 
-void    dlinfo_free(dlinfo *dli);
 
-#define   /*  __OP3_GCM_BASE_DOWNLOADER_H_  */
+#endif   /*  __OP3_GCM_BASE_DOWNLOADER_H_  */
