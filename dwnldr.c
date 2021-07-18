@@ -67,6 +67,8 @@ dlinfo *dlinfo_free(dlinfo *dli)
         return NULL;
     if (dli->url)
         free(dli->url);
+    if (dli->kiwit)
+        kiwit_free(dli->kiwit);
     // etc...
     free(dli);
 
