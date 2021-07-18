@@ -61,6 +61,20 @@ int dlinfo_set_kiwit(dlinfo *dli, const KIWIT *kiwit)
     return 0;
 }
 
+int dlinfo_set_region(dlinfo *dli, const Region *reg)
+{
+    if (!dli || !reg)
+        return 1;
+
+    // free prev region (if exists)
+    if (dli->reg)
+        region_free(dli->reg);
+
+    dli->reg = reg;
+
+    return 0;
+}
+
 dlinfo *dlinfo_free(dlinfo *dli)
 {
     if (!dli)
