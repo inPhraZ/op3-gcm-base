@@ -11,14 +11,19 @@
 #ifndef   __OP3_GCM_BASE_DOWNLOADER_H_
 #define   __OP3_GCM_BASE_DOWNLOADER_H_
 
+#include "kiwit.h"
+
 typedef struct _dlinfo {
     char        *url;
+    KIWIT       *kiwit;
     // etc...
 } dlinfo;
 
-dlinfo  *dlinfo_init(const char *url);
+dlinfo  *dlinfo_new();
 
 int     dlinfo_set_url(dlinfo *dli, const char *url);
+
+int     dlinfo_set_kiwit(dlinfo *dli, const KIWIT *kiwit);
 
 void    dlinfo_free(dlinfo *dli);
 

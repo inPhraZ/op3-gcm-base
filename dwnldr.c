@@ -12,20 +12,15 @@
 #include <string.h>
 
 #include "dwnldr.h"
+#include "kiwit.h"
 
-dlinfo *dlinfo_init(const char *url)
+dlinfo *dlinfo_new()
 {
     dlinfo *dli;
 
-    if (!url)
-        return NULL;
-    
     dli = (dlinfo *)malloc(sizeof(dlinfo));
     if (!dl)
         return NULL;
-
-    if (dlinfo_set_url(dli, url))
-        return dlinfo_free(dli);
 
     return dli;
 }
@@ -48,6 +43,20 @@ int dlinfo_set_url(dlinfo *dli, const char *url)
 
     memset(dli->url, 0, urlen + 1);
     strncpy(dli->url, url, urlen);
+
+    return 0;
+}
+
+int dlinfo_set_kiwit(dlinfo *dli, const KIWIT *kiwit)
+{
+    if (!dli || !kiwit)
+        return 1;
+
+    // free prev kiwit (if exists)
+    if (dli->kiwit)
+        kiwit_free(dli->kiwit);
+
+    dli->kiwit = kiwit;
 
     return 0;
 }
