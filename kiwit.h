@@ -11,24 +11,26 @@
 #ifndef     __OP3_GCM_BASE_KIWIT_H_
 #define     __OP3_GCM_BASE_KIWIT_H_
 
+#include <stdint.h>
+
 #define     KEY_LEN     32
 #define     IV_LEN      16
 //#define     TAG_LEN     16
 
 typedef struct _kiwit {
-    char        *key;
-    char        *iv;
-//    char       *tag;
+    uint8_t        *key;
+    uint8_t        *iv;
+//    uint8_t       *tag;
 } KIWIT;
 
-KIWIT *kiwit_new(const char *key, const char *iv);
-//KIWIT *kiwit_new(const char *key, const char *iv, const char *tag);
+KIWIT *kiwit_new(const uint8_t *key, const uint8_t *iv);
+//KIWIT *kiwit_new(const uint8_t *key, const uint8_t *iv, const uint8_t *tag);
 
-int kiwit_set_key(KIWIT *kiwit, const char *key);
+int kiwit_set_key(KIWIT *kiwit, const uint8_t *key);
 
-int kiwit_set_iv(KIWIT *kiwit, const char *iv);
+int kiwit_set_iv(KIWIT *kiwit, const uint8_t *iv);
 
-//int kiwit_set_tag(KIWIT *kiwit, const char *tag);
+//int kiwit_set_tag(KIWIT *kiwit, const uint8_t *tag);
 
 KIWIT *kiwit_free(KIWIT  *kiwit);
 

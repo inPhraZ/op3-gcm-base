@@ -13,7 +13,7 @@
 
 #include "kiwit.h"
 
-KIWIT *kiwit_new(const char *key, const char *iv)
+KIWIT *kiwit_new(const uint8_t *key, const uint8_t *iv)
 {
     KIWIT *kiwit;
 
@@ -35,12 +35,12 @@ KIWIT *kiwit_new(const char *key, const char *iv)
     return kiwit;
 }
 
-int kiwit_set_key(KIWIT *kiwit, const char *key)
+int kiwit_set_key(KIWIT *kiwit, const uint8_t *key)
 {
     if (!kiwit || !key)
         return 1;
 
-    kiwit->key = (char *)malloc(KEY_LEN + 1);
+    kiwit->key = (uint8_t *)malloc(KEY_LEN + 1);
     if (!kiwit->key)
         return 1;
 
@@ -50,12 +50,12 @@ int kiwit_set_key(KIWIT *kiwit, const char *key)
     return 0;
 }
 
-int kiwit_set_iv(KIWIT *kiwit, const char *iv)
+int kiwit_set_iv(KIWIT *kiwit, const uint8_t *iv)
 {
     if (!kiwit || !iv)
         return 1;
 
-    kiwit->iv = (char *)malloc(IV_LEN + 1);
+    kiwit->iv = (uint8_t *)malloc(IV_LEN + 1);
     if (!kiwit->iv)
         return 1;
 
