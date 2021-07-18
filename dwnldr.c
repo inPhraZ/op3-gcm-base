@@ -32,9 +32,7 @@ int dlinfo_set_url(dlinfo *dli, const char *url)
     if (!dli || !url)
         return 1;
 
-    // free prev url (if exists)
-    if (dli->url)
-        free(dli->url);
+    free(dli->url);
 
     urlen = strlen(url);
     dli->url = (char *)malloc(urlen + 1);
@@ -51,11 +49,8 @@ int dlinfo_set_kiwit(dlinfo *dli, KIWIT *kiwit)
 {
     if (!dli || !kiwit)
         return 1;
-
-    // free prev kiwit (if exists)
-    if (dli->kiwit)
-        kiwit_free(dli->kiwit);
-
+    
+    kiwit_free(dli->kiwit);
     dli->kiwit = kiwit;
 
     return 0;
@@ -66,10 +61,7 @@ int dlinfo_set_region(dlinfo *dli, Region *reg)
     if (!dli || !reg)
         return 1;
 
-    // free prev region (if exists)
-    if (dli->reg)
-        region_free(dli->reg);
-
+    region_free(dli->reg);
     dli->reg = reg;
 
     return 0;
