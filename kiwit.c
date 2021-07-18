@@ -70,10 +70,8 @@ KIWIT *kiwit_free(KIWIT   *kiwit)
     if (!kiwit)
         return NULL;
 
-    if (kiwit->key)
-        free(kiwit->key);
-    if (kiwit->iv)
-        free(kiwit->iv);
+    free(kiwit->key);
+    free(kiwit->iv);
     free(kiwit);
 
     return NULL;
