@@ -16,7 +16,10 @@ typedef struct _dlinfo {
     // etc...
 } dlinfo;
 
-dlinfo      *dlinfo_init(const char *url);
-void        dlinfo_free(dlinfo *dli);
+dlinfo  *dlinfo_init(const char *url);
+
+int     dlinfo_set_url(dlinfo *dli, const char *url);
+
+void    dlinfo_free(dlinfo *dli);
 
 #define   /*  __OP3_GCM_BASE_DOWNLOADER_H_  */
