@@ -83,6 +83,8 @@ dlinfo *dlinfo_free(dlinfo *dli)
         free(dli->url);
     if (dli->kiwit)
         kiwit_free(dli->kiwit);
+    if (dli->reg)
+        region_free(dli->reg);
     // etc...
     free(dli);
 
