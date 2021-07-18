@@ -28,7 +28,7 @@ static Block **region_allocate_blocks(
         const unsigned int num_blks,
         const size_t sz)
 {
-    Blokc **blokcs;
+    Block **blocks;
     blocks = malloc(sizeof(Block *) * num_blks);
     if (!blocks)
         return NULL;
