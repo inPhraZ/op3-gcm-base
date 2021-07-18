@@ -16,7 +16,7 @@
 Block *block_new(const size_t sz)
 {
     Block *blk;
-    blk = (Blokc *)malloc(sizeof(Block));
+    blk = (Block *)malloc(sizeof(Block));
     if (!blk)
         return NULL;
 
