@@ -9,9 +9,10 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 #include <sys/mman.h>
 
-#include "region.h"
+#include "block.h"
 
 Block *block_new(const size_t sz)
 {
@@ -46,4 +47,34 @@ Block *block_free(Block *blk)
     munmap(blk->sptr, blk->sz);
     free(blk);
     return NULL;
+}
+
+ssize_t block_write(Block *blk, const void *buf, size_t count)
+{
+    if (!blk || !buf)
+        return -1;
+
+    size_t rem = (blk->sz - blk->woff);
+    size_t sz = (rem >= count) ? count  : rem;
+
+    memmove(blk->wptr, buf, sz);
+    blk->wptr += sz;
+    blk->woff += sz;
+
+    return sz;
+}
+
+ssize_t block_read(Block *blk, void *buf, size_t count)
+{
+    if (!blk || !buf)
+        return -1;
+
+    size_t rem = (blk->sz - blk->roff);
+    size_t sz = (rem >= count) ? count : rem;
+
+    memmove(buf, blk->rptr, sz);
+    blk->rptr += sz;
+    blk->roff += sz;
+
+    return sz;
 }

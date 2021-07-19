@@ -25,4 +25,8 @@ Block   *block_new(const size_t sz);
 
 Block   *block_free(Block *blk);
 
+ssize_t  block_write(Block *blk, const void *buf, size_t count);
+
+ssize_t  block_read(Block *blk, void *buf, size_t count);
+
 #endif      /*  __OP3_GCM_BASE_BLOCK_H_ */
