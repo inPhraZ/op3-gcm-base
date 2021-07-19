@@ -73,12 +73,9 @@ dlinfo *dlinfo_free(dlinfo *dli)
 {
     if (!dli)
         return NULL;
-    if (dli->url)
-        free(dli->url);
-    if (dli->kiwit)
-        kiwit_free(dli->kiwit);
-    if (dli->reg)
-        region_free(dli->reg);
+    free(dli->url);
+    kiwit_free(dli->kiwit);
+    region_free(dli->reg);
     // etc...
     free(dli);
 
