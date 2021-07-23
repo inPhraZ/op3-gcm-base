@@ -81,3 +81,33 @@ dlinfo *dlinfo_free(dlinfo *dli)
 
     return NULL;
 }
+
+static void *download_file(void *dliptr)
+{
+    return NULL;
+}
+
+static void *decrypt_file(void *dliptr)
+{
+    return NULL;
+}
+
+int dlinfo_download(dlinfo *dli, pthread_t *doth, pthread_t *deth)
+{
+    pthread_t   _doth, _deth;
+
+    if (!dli)
+        return 1;
+
+    if (pthread_create(&_doth, NULL, download_file, dli))
+        return 1;
+    if (pthread_create(&_deth, NULL, decrypt_file, dli))
+        return 1;
+
+    if (doth)
+        *doth = _doth;
+    if (deth)
+        *deth = _deth;
+
+    return 0;
+}

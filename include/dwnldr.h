@@ -12,12 +12,12 @@
 #define   __OP3_GCM_BASE_DOWNLOADER_H_
 
 #include "kiwit.h"
-#include "region.h"
 
 typedef struct _dlinfo {
     char        *url;
     KIWIT       *kiwit;
-    Region      *reg;
+    size_t      file_size;
+    int         pipefds[2];
     // etc...
 } dlinfo;
 
@@ -29,7 +29,8 @@ int     dlinfo_set_url(dlinfo *dli, const char *url);
 
 int     dlinfo_set_kiwit(dlinfo *dli, KIWIT *kiwit);
 
-int     dlinfo_set_region(dlinfo *dli, Region *reg);
-
+int     dlinfo_download(dlinfo *dli, 
+                        pthread_t *doth,
+                        pthread_t *deth);
 
 #endif   /*  __OP3_GCM_BASE_DOWNLOADER_H_  */
