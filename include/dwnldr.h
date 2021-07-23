@@ -14,10 +14,11 @@
 #include "kiwit.h"
 
 typedef struct _dlinfo {
-    char        *url;
-    KIWIT       *kiwit;
-    size_t      file_size;
-    int         pipefds[2];
+    char        *url;           // url to encrypted file
+    KIWIT       *kiwit;         // [KEY, IV]
+    size_t      filesz;         // store size of the file
+    int         rfd;            // pipe: (read end)
+    int         wfd;            // pipe: (write end)
     // etc...
 } dlinfo;
 
