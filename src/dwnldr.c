@@ -64,7 +64,6 @@ int dlinfo_set_kiwit(dlinfo *dli, KIWIT *kiwit)
     return 0;
 }
 
-#if 0
 int dlinfo_set_region(dlinfo *dli, Region *reg)
 {
     if (!dli || !reg)
@@ -75,7 +74,6 @@ int dlinfo_set_region(dlinfo *dli, Region *reg)
 
     return 0;
 }
-#endif
 
 dlinfo *dlinfo_free(dlinfo *dli)
 {
@@ -83,6 +81,7 @@ dlinfo *dlinfo_free(dlinfo *dli)
         return NULL;
     free(dli->url);
     kiwit_free(dli->kiwit);
+    region_free(dli->reg);
     // etc...
     free(dli);
 
@@ -93,8 +92,12 @@ dlinfo *dlinfo_free(dlinfo *dli)
 static size_t
 downloadhcb(void *data, size_t size, size_t nmemb, void *userdata)
 {
-    if (strstr((const char *)data, "content-length"))
+    size_t s;
+    if (strstr((const char *)data, "content-length")) {
         sscanf((const char *)data, "content-length: %d", (size_t *)userdata);
+        sscanf((const char *)data, "content-length: %d", &s);
+        printf("file size: %d\n", s);
+    }
     return size * nmemb;
 }
 
@@ -175,6 +178,7 @@ static void *decrypt_file(void *dliptr)
             break;
         }
         // write
+        region_append(dli->reg, outbuf, outlen);
     }
 
     // close pipe
@@ -210,5 +214,6 @@ int dlinfo_download(dlinfo *dli, pthread_t *doth, pthread_t *deth)
     if (deth)
         *deth = _deth;
 
+    printf("downloading...\n");
     return 0;
 }

@@ -12,7 +12,7 @@
 #include <string.h>
 #include <sys/mman.h>
 
-#include "region_map.h"
+#include "region.h"
 
 Region *region_new(const size_t sz)
 {
