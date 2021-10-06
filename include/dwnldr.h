@@ -12,10 +12,12 @@
 #define   __OP3_GCM_BASE_DOWNLOADER_H_
 
 #include "kiwit.h"
+#include "region.h"
 
 typedef struct _dlinfo {
     char        *url;           // url to encrypted file
     KIWIT       *kiwit;         // [KEY, IV]
+    Region      *reg;           // Region of memoty
     size_t      filesz;         // store size of the file
     int         rfd;            // pipe: (read end)
     int         wfd;            // pipe: (write end)
@@ -29,6 +31,8 @@ dlinfo  *dlinfo_free(dlinfo *dli);
 int     dlinfo_set_url(dlinfo *dli, const char *url);
 
 int     dlinfo_set_kiwit(dlinfo *dli, KIWIT *kiwit);
+
+int     dlinfo_set_region(dlinfo *dli, Region *reg);
 
 int     dlinfo_download(dlinfo *dli, 
                         pthread_t *doth,
