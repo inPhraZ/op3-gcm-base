@@ -11,17 +11,16 @@
 #ifndef     __OP3_GCM_BASE_REGION_H_
 #define     __OP3_GCM_BASE_REGION_H_
 
-#include "block.h"
-
-#define     SZ_PER_BLOCK        (20 * 1024)
-
 typedef struct _region {
-    Block           **blocks;
-    size_t          sz;
-    unsigned int    num_blks;
+    void    *sptr;
+    void    *wptr;
+    size_t  woff;
+    size_t  sz;
 } Region;
 
 Region  *region_new(const size_t sz);
+
+ssize_t region_append(Region *reg, const void *buf, size_t count);
 
 Region  *region_free(Region *reg);
 

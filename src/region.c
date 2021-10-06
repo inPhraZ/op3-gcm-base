@@ -9,39 +9,10 @@
  */
 
 #include <stdlib.h>
-#include <math.h>
+#include <string.h>
+#include <sys/mman.h>
 
-#include "region.h"
-
-static void region_free_blocks(Block **blocks, const int e)
-{
-    if (!blocks)
-        return;
-
-    for (int i = 0; i < e; ++i)
-        block_free(blocks[i]);
-
-    free(blocks);
-}
-
-static Block **region_allocate_blocks(
-        const unsigned int num_blks,
-        const size_t sz)
-{
-    Block **blocks;
-    blocks = malloc(sizeof(Block *) * num_blks);
-    if (!blocks)
-        return NULL;
-
-    for (int i = 0; i < num_blks; ++i){
-        blocks[i] = block_new(sz);
-        if (!blocks[i]){
-            region_free_blocks(blocks, i);
-            return NULL;
-        }
-    }
-    return blocks;
-}
+#include "region_map.h"
 
 Region *region_new(const size_t sz)
 {
@@ -50,22 +21,36 @@ Region *region_new(const size_t sz)
     if (!reg)
         return NULL;
 
-    reg->sz = sz;
-    reg->num_blks = ceil((double)sz / SZ_PER_BLOCK);
-
-    reg->blocks = region_allocate_blocks(reg->num_blks, sz);
-    if (!reg->blocks){
-        free(reg);
+    reg->sptr =
+        mmap(NULL, sz, PROT_READ | PROT_WRITE,
+             MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    if (reg->sptr == MAP_FAILED)
         return NULL;
-    }
+
+    reg->wptr = reg->sptr;
+    reg->woff = 0;
+    reg->sz = sz;
+
     return reg;
+}
+
+ssize_t region_append(Region *reg, const void *buf, size_t count)
+{
+    if (!reg)
+        return -1;
+
+    size_t sz = reg->sz - reg->woff;
+    size_t numwr = (sz >= count) ? count : sz;
+    memmove(reg->wptr, buf, numwr);
+    reg->wptr += numwr;
+    reg->woff += numwr;
+    return numwr;
 }
 
 Region *region_free(Region *reg)
 {
     if (!reg)
         return NULL;
-    region_free_blocks(reg->blocks, reg->num_blks);
     free(reg);
     return NULL;
 }
