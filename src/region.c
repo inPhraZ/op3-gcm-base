@@ -28,7 +28,9 @@ Region *region_new(const size_t sz)
         return NULL;
 
     reg->wptr = reg->sptr;
+    reg->rptr = reg->sptr;
     reg->woff = 0;
+    reg->roff = 0;
     reg->sz = sz;
 
     return reg;
