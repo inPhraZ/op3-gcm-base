@@ -47,6 +47,19 @@ ssize_t region_append(Region *reg, const void *buf, size_t count)
     return numwr;
 }
 
+ssize_t region_read(Region *reg, void *buf, size_t count)
+{
+    if (!reg || !buf)
+        return -1;
+
+    size_t sz = reg->sz - reg->roff;
+    size_t numrd = (sz >= count) ? count : sz;
+    memmove(buf, reg->rptr, numrd);
+    reg->rptr += numrd;
+    reg->roff += numrd;
+    return numrd;
+}
+
 Region *region_free(Region *reg)
 {
     if (!reg)

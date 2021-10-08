@@ -14,13 +14,17 @@
 typedef struct _region {
     void    *sptr;
     void    *wptr;
+    void    *rptr;
     size_t  woff;
+    size_t  roff;
     size_t  sz;
 } Region;
 
 Region  *region_new(const size_t sz);
 
 ssize_t region_append(Region *reg, const void *buf, size_t count);
+
+ssize_t region_read(Region *reg, void *buf, size_t count);
 
 Region  *region_free(Region *reg);
 
