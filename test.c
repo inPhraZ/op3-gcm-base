@@ -49,16 +49,38 @@ int main(int argc, char **argv)
     KIWIT *kiwit = kiwit_new(key, iv);
     Region *reg = region_new(REGSIZE);
 
-    if (argc < 2)
+    if (argc < 2) {
+        printf("Usage: %s url-to-gcm-mp3\n");
+        printf("key and iv in the source are for a test file\n");
         return 1;
+    }
+
     dlinfo_set_url(dli, argv[1]);
     dlinfo_set_kiwit(dli, kiwit);
     dlinfo_set_region(dli, reg);
     pthread_t t1, t2;
     dlinfo_download(dli, &t1, &t2);
 
+    printf("Wait for threads to terminate...\n");
     pthread_join(t1, NULL);
     pthread_join(t2, NULL);
+
+    printf("Threads are done\n");
+
+    FILE *fp = fopen("a.mp3", "w");
+    if (!fp) {
+        perror("fopen");
+        dlinfo_free(dli);
+        return 1;
+    }
+
+    char *buf = (char *)malloc(dli->filesz);
+    printf("copy data from memory in the buffer\n");
+    region_read(dli->reg, buf, dli->filesz);
+    printf("copy data from buffer in the file\n");
+    fwrite(buf, 1, dli->filesz, fp);
+    fclose(fp);
+    dlinfo_free(dli);
 
     return 0;
 
