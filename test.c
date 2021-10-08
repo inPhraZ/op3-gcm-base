@@ -50,7 +50,7 @@ int main(int argc, char **argv)
     Region *reg = region_new(REGSIZE);
 
     if (argc < 2) {
-        printf("Usage: %s url-to-gcm-mp3\n");
+        printf("Usage: %s url-to-gcm-mp3\n", argv[0]);
         printf("key and iv in the source are for a test file\n");
         return 1;
     }
